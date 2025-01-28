@@ -6,12 +6,26 @@ import CoreConcepts from "./components/CoreConcepts.jsx";
 import TabButton from "./components/TabButton.jsx";
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState("components");
+  const [selectedTopic, setSelectedTopic] = useState();
 
   function handleClick(selectedButton) {
     //selectedButton => Component, Props, JSX, State
     setSelectedTopic(selectedButton);
     console.log(selectedTopic);
+  }
+
+  let tapContent = <p>Please select a topic</p>;
+
+  if (selectedTopic) {
+    tapContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title} </h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTopic].code}</code>
+        </pre>
+      </div>
+    );
   }
 
   return (
@@ -41,13 +55,7 @@ function App() {
             <TabButton onSelect={() => handleClick("jsx")}>JSX</TabButton>
             <TabButton onSelect={() => handleClick("state")}>State</TabButton>
           </menu>
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedTopic].title} </h3>
-            <p>{EXAMPLES[selectedTopic].description}</p>
-            <pre>
-              <code>{EXAMPLES[selectedTopic].code}</code>
-            </pre>
-          </div>
+          {tapContent}
         </section>
       </main>
     </div>
